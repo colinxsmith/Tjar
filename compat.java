@@ -6,8 +6,6 @@ import java.util.HashMap;
 import com.bitaplus.BitaModel.Optimisation.OptimiserController;
 
 public class compat {
-    double seek;
-
     static double[] s2d(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
         double[] backd = new double[back.length];
@@ -128,16 +126,16 @@ public class compat {
         int tradesell = s2i("tradesell", DATA)[0];
         int nabs = s2i("nabs", DATA)[0];
         int mabs = s2i("mabs", DATA)[0];
-        double[][] AA = new double[n][m];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                AA[i][j] = A[i + j * n];
+        double[][] AA = new double[m][n];
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                AA[i][j] = A[i + j * m];
             }
         }
-        double[][] Abs_A = new double[n][nabs];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < nabs; ++j) {
-                Abs_A[i][j] = A_abs[i + j * n];
+        double[][] Abs_A = new double[nabs][n];
+        for (int i = 0; i < nabs; ++i) {
+            for (int j = 0; j < n; ++j) {
+                Abs_A[i][j] = A_abs[i + j * nabs];
             }
         }
         double[] L = s2d("L", DATA);
