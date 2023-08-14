@@ -52,11 +52,9 @@ public class compat {
         String line = "";
         String lastKey = "";
         BufferedReader br = null;
-        FileReader fff = null;
         HashMap<String, String[]> DATA = new HashMap<String, String[]>();
         try {
-            fff = new FileReader(file);
-            br = new BufferedReader(fff);
+            br = new BufferedReader(new FileReader(file));
             while ((line = br.readLine()) != null) {
                 // System.out.println(line);
                 if (line.contains("--------"))
@@ -90,6 +88,9 @@ public class compat {
             // System.out.println((DATA));
         } catch (Exception e) {
             System.out.println(lastKey + " " + line + ":" + e);
+        } finally {
+            if (br != null)
+                br = null;
         }
         int n = s2i("n", DATA)[0];
         int m = s2i("m", DATA)[0];
