@@ -85,13 +85,13 @@ public class compat {
                     }
                 }
             }
-            // System.out.println((DATA));
         } catch (Exception e) {
             System.out.println(lastKey + " " + line + ":" + e);
         } finally {
             if (br != null)
                 br = null;
         }
+        if(br!=null)System.out.println(br);
         int n = s2i("n", DATA)[0];
         int m = s2i("m", DATA)[0];
         int nfac = s2i("nfac", DATA)[0];
