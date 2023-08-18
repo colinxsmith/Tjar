@@ -166,7 +166,7 @@ public class compat {
             SV = s2d("SV", DATA);
             FC = s2d("FC", DATA);
            double[] FLf = s2d("FL", DATA);
-           double FL = safejava.single2double(nfac, n, FLf);
+           if(FLf!=null) FL = safejava.single2double(nfac, n, FLf);
         }
         if (SV != null)
             Q = null;
