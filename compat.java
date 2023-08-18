@@ -161,12 +161,12 @@ public class compat {
         double[] Q = s2d("Q", DATA);
         double[] SV = null;
         double[] FC = null;
-        double[] FLf = null;
+        double[][] FL = null;
         if (nfac > 0) {
             SV = s2d("SV", DATA);
             FC = s2d("FC", DATA);
-            FLf = s2d("FL", DATA);
-           double [][]FL = safejava.single2double(nfac, n, FLf);
+           double[] FLf = s2d("FL", DATA);
+           double FL = safejava.single2double(nfac, n, FLf);
         }
         if (SV != null)
             Q = null;
