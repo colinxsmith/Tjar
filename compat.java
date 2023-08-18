@@ -3,48 +3,52 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import com.bitaplus.BitaModel.Optimisation.OptimiserController;
-
 public class compat {
     static double[] s2d(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
-        double[] backd = new double[back.length];
-        for (int i = 0; i < back.length; ++i)
-            backd[i] = Double.parseDouble(back[i]);
+        double[] backd = null;
+        if ((back[0]).length() > 0) {
+            backd = new double[back.length];
+            for (int i = 0; i < back.length; ++i)
+                backd[i] = Double.parseDouble(back[i]);
+        }
         return backd;
     }
 
     static int[] s2i(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
-        int[] backd = new int[back.length];
-        for (int i = 0; i < back.length; ++i)
-            backd[i] = Integer.parseInt(back[i]);
+        int[] backd = null;
+        if ((back[0]).length() > 0) {
+            backd = new int[back.length];
+            for (int i = 0; i < back.length; ++i)
+                backd[i] = Integer.parseInt(back[i]);
+        }
         return backd;
     }
 
-    static { // Need this if it is not part of class OptimiserController
+    static { // Need this if it is not part of class safejava
         try {
-            System.loadLibrary("OptimiserController");
+            System.loadLibrary("safejava");
         } catch (UnsatisfiedLinkError e) {
-            System.err.println("Native code library OptimiserController failed to load.\n" + e);
-            System.err.println("Native code library OptimiserController failed to load.\n" + e);
-            System.err.println("Native code library OptimiserController failed to load.\n" + e);
-            System.err.println("Native code library OptimiserController failed to load.\n" + e);
-            System.err.println("Native code library OptimiserController failed to load.\n" + e);
-            System.err.println("Native code library OptimiserController failed to load.\n" + e);
+            System.err.println("Native code library safejava failed to load.\n" + e);
+            System.err.println("Native code library safejava failed to load.\n" + e);
+            System.err.println("Native code library safejava failed to load.\n" + e);
+            System.err.println("Native code library safejava failed to load.\n" + e);
+            System.err.println("Native code library safejava failed to load.\n" + e);
+            System.err.println("Native code library safejava failed to load.\n" + e);
             // System.exit(1);
         }
     }
 
     public static void main(String args[]) {
-        System.out.println(OptimiserController.version());
+        System.out.println(safejava.version());
 
-        System.out.println(OptimiserController.expire_date());
+        System.out.println(safejava.expire_date());
 
-        String file = "prob20june.log";
+        String file = "cost.log";
         if (args.length == 1)
             file = args[0];
-        String[] keys = "n nfac names m A L soft_m soft_A soft_L soft_U soft_b soft_l U alpha shortalphacost bench Q gamma initial delta buy sell qbuy qsell kappa basket longbasket downrisk downfactor shortbasket tradebuy tradesell tradenum revise costs min_holding min_trade ls full minRisk maxRisk rmin rmax round min_lot size_lot ncomp Composites value valuel npiece hpiece pgrad nabs A_abs mabs I_A Abs_U Abs_L ShortCostScale mask"
+        String[] keys = "SV FC FL n nfac names m A L soft_m soft_A soft_L soft_U soft_b soft_l U alpha shortalphacost bench Q gamma initial delta buy sell qbuy qsell kappa basket longbasket downrisk downfactor shortbasket tradebuy tradesell tradenum revise costs min_holding min_trade ls full minRisk maxRisk rmin rmax round min_lot size_lot ncomp Composites value valuel npiece hpiece pgrad nabs A_abs mabs I_A Abs_U Abs_L ShortCostScale mask"
                 .split(" ");
         String delimiter = " ";
         String line = "";
@@ -155,6 +159,18 @@ public class compat {
         double[] alpha = s2d("alpha", DATA);
         double[] bench = s2d("bench", DATA);
         double[] Q = s2d("Q", DATA);
+        double[] SV = null;
+        double[] FC = null;
+        double[] FLf = null;
+        double[][] FL = null;
+        if (nfac > 0) {
+            SV = s2d("SV", DATA);
+            FC = s2d("FC", DATA);
+            FLf = s2d("FL", DATA);
+            FL = safejava.single2double(nfac, n, FLf);
+        }
+        if (SV != null)
+            Q = null;
         double[] buy = null;
         try {
             buy = s2d("buy", DATA);
@@ -218,10 +234,10 @@ public class compat {
         double[] w = new double[n];
         int[] shake = new int[n];
         double[] ogamma = new double[1];
-        OptimiserController.Optimise_internalCVPAFbl((long) n, nfac, DATA.get("names"), w, (long) m, AA, L, U,
+        safejava.Optimise_internalCVPAFbl((long) n, nfac, DATA.get("names"), w, (long) m, AA, L, U,
                 alpha, bench, Q, gamma, initial, delta, buy, sell, kappa, basket, trades, revise, costs, min_hold,
                 min_trade, ls, full, rmin, rmax, round, min_lot, size_lot, shake, (long) ncomp, Composites, value,
-                (long) npiece, hpiece, pgrad, (long) nabs, Abs_A, (long) mabs, I_A, Abs_U, null, null, null,
+                (long) npiece, hpiece, pgrad, (long) nabs, Abs_A, (long) mabs, I_A, Abs_U, FC, FL, SV,
                 minRisk, maxRisk, ogamma, mask, 2, "OptJava.log", downrisk, downfactor, longbasket, shortbasket,
                 tradebuy, tradesell, zetaS, zetaF, ShortCostScale, valuel, Abs_L);
     }
