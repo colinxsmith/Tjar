@@ -7,7 +7,7 @@ public class compat {
     static double[] s2d(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
         double[] backd = null;
-        if ((back[0]).length() > 0) {
+        if (back!=null && (back[0]).length() > 0) {
             backd = new double[back.length];
             for (int i = 0; i < back.length; ++i)
                 backd[i] = Double.parseDouble(back[i]);
@@ -18,7 +18,7 @@ public class compat {
     static int[] s2i(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
         int[] backd = null;
-        if ((back[0]).length() > 0) {
+        if (back!=null&&(back[0]).length() > 0) {
             backd = new int[back.length];
             for (int i = 0; i < back.length; ++i)
                 backd[i] = Integer.parseInt(back[i]);
