@@ -166,7 +166,14 @@ public class compat {
             SV = s2d("SV", DATA);
             FC = s2d("FC", DATA);
            double[] FLf = s2d("FL", DATA);
-           if(FLf!=null) FL = OptimiserController.single2double(nfac, n, FLf);
+           FL=new double[nfac][n];
+        for (int i = 0;FLf!=null& i < nfac; ++i) {
+            for (int j = 0; j < n; ++j) {
+                FL[i][j] = FLf[i + j * m];
+            }
+        }
+
+   //        if(FLf!=null) FL = OptimiserController.single2double(nfac, n, FLf);
         }
         if (SV != null)
             Q = null;
