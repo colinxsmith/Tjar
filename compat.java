@@ -3,11 +3,12 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import com.bitaplus.BitaModel.Optimisation.OptimiserController;
+
 public class compat {
     static double[] s2d(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
         double[] backd = null;
-        if (back!=null && (back[0]).length() > 0) {
+        if (back != null && (back[0]).length() > 0) {
             backd = new double[back.length];
             for (int i = 0; i < back.length; ++i)
                 backd[i] = Double.parseDouble(back[i]);
@@ -18,7 +19,7 @@ public class compat {
     static int[] s2i(String key, HashMap<String, String[]> D) {
         String[] back = D.get(key);
         int[] backd = null;
-        if (back!=null&&(back[0]).length() > 0) {
+        if (back != null && (back[0]).length() > 0) {
             backd = new int[back.length];
             for (int i = 0; i < back.length; ++i)
                 backd[i] = Integer.parseInt(back[i]);
@@ -165,15 +166,15 @@ public class compat {
         if (nfac > 0) {
             SV = s2d("SV", DATA);
             FC = s2d("FC", DATA);
-           double[] FLf = s2d("FL", DATA);
-           FL=new double[nfac][n];
-        for (int i = 0;FLf!=null& i < nfac; ++i) {
-            for (int j = 0; j < n; ++j) {
-                FL[i][j] = FLf[i + j * m];
+            double[] FLf = s2d("FL", DATA);
+            FL = new double[nfac][n];
+            for (int i = 0; FLf != null & i < nfac; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    FL[i][j] = FLf[i + j * nfac];
+                }
             }
-        }
 
-   //        if(FLf!=null) FL = OptimiserController.single2double(nfac, n, FLf);
+            // if(FLf!=null) FL = OptimiserController.single2double(nfac, n, FLf);
         }
         if (SV != null)
             Q = null;
