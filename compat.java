@@ -27,6 +27,17 @@ public class compat {
         return backd;
     }
 
+    static double[][] single2double(int m, int n, double[] singleArray) {
+        if(singleArray==null)return null;
+        double[][] back = new double[m][n];
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                back[i][j] = singleArray[i + m * j];
+            }
+        }
+        return back;
+    }
+
     static { // Need this if it is not part of class OptimiserController
         try {
             System.loadLibrary("OptimiserController");
@@ -130,18 +141,8 @@ public class compat {
         int tradesell = s2i("tradesell", DATA)[0];
         int nabs = s2i("nabs", DATA)[0];
         int mabs = s2i("mabs", DATA)[0];
-        double[][] AA = new double[m][n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                AA[i][j] = A[i + j * m];
-            }
-        }
-        double[][] Abs_A = new double[nabs][n];
-        for (int i = 0; i < nabs; ++i) {
-            for (int j = 0; j < n; ++j) {
-                Abs_A[i][j] = A_abs[i + j * nabs];
-            }
-        }
+        double[][] AA = single2double(m, n, A);
+        double[][] Abs_A = single2double(nabs, n, A_abs);
         double[] L = s2d("L", DATA);
         double[] U = s2d("U", DATA);
         double[] Abs_L = null;
@@ -167,14 +168,7 @@ public class compat {
             SV = s2d("SV", DATA);
             FC = s2d("FC", DATA);
             double[] FLf = s2d("FL", DATA);
-            FL = new double[nfac][n];
-            for (int i = 0; FLf != null & i < nfac; ++i) {
-                for (int j = 0; j < n; ++j) {
-                    FL[i][j] = FLf[i + j * nfac];
-                }
-            }
-
-            // if(FLf!=null) FL = OptimiserController.single2double(nfac, n, FLf);
+            FL = single2double(nfac, n, FLf);
         }
         if (SV != null)
             Q = null;
